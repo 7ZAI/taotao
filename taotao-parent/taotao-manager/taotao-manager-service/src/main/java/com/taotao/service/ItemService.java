@@ -1,6 +1,9 @@
 package com.taotao.service;
 
+import com.taotao.pojo.EasyUIResult;
 import com.taotao.pojo.TbItem;
+
+import java.util.List;
 
 /**
  * @Author binblink
@@ -10,4 +13,6 @@ import com.taotao.pojo.TbItem;
 public interface ItemService {
 
     TbItem getItemByid(Long id) throws Exception;
+
+    EasyUIResult getItemList(Integer page, Integer rows) throws Exception;
 }

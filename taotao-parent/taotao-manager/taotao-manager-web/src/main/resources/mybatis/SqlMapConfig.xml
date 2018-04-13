@@ -6,5 +6,11 @@
 
 <configuration>
 
+    <plugins>
 
+        <plugin interceptor="com.github.pagehelper.PageHelper">
+            <property name="dialect" value="mysql"></property>
+        </plugin>
+    </plugins>
+    
 </configuration>
