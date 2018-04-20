@@ -8,7 +8,6 @@
     <display-name>taotao-manager</display-name>
 
 
-
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
@@ -55,6 +54,5 @@
         <servlet-name>taotao-manager</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-
 
 </web-app>

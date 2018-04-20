@@ -3,6 +3,7 @@ package com.taotao.controller;
 import com.taotao.pojo.EasyUIResult;
 import com.taotao.pojo.TbItem;
 import com.taotao.service.ItemService;
+import com.taotao.utils.TaotaoResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,11 +29,20 @@ public class ItemController {
         return itemService.getItemByid(itemId);
     }
 
-    @RequestMapping("list")
+    @RequestMapping("/list")
     @ResponseBody
     public EasyUIResult getItemList(@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "30")Integer rows) throws Exception{
 
         return itemService.getItemList(page,rows);
     }
+
+    @RequestMapping("/save")
+    @ResponseBody
+    public TaotaoResult saveItem(TbItem item, String desc) throws Exception {
+        //添加商品信息
+        itemService.saveItem(item,desc);
+        return TaotaoResult.ok();
+    }
+
 
 }
