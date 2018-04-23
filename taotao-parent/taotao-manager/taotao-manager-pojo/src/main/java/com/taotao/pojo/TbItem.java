@@ -18,7 +18,7 @@ public class TbItem {
     private String image;
 
     private Long cid;
-
+    //1正常  2下架
     private Byte status;
 
     private Date created;

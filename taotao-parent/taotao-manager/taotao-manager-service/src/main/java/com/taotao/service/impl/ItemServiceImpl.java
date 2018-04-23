@@ -4,10 +4,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.taotao.mapper.TbItemDescMapper;
 import com.taotao.mapper.TbItemMapper;
-import com.taotao.pojo.EasyUIResult;
-import com.taotao.pojo.TbItem;
-import com.taotao.pojo.TbItemDesc;
-import com.taotao.pojo.TbItemExample;
+import com.taotao.mapper.TbItemParamItemMapper;
+import com.taotao.mapper.TbItemParamMapper;
+import com.taotao.pojo.*;
 import com.taotao.service.ItemService;
 import com.taotao.utils.IDUtils;
 import com.taotao.utils.TaotaoResult;
@@ -30,6 +29,9 @@ public class ItemServiceImpl implements ItemService{
 
     @Autowired
     private TbItemDescMapper tbItemDescMapper;
+
+    @Autowired
+    private TbItemParamItemMapper itemParamItemMapper;
 
     @Override
     public TbItem getItemByid(Long id) throws Exception {
@@ -69,7 +71,7 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
-    public TaotaoResult saveItem(TbItem tbItem, String desc) throws Exception {
+    public TaotaoResult saveItem(TbItem tbItem, String desc,String paramsData) throws Exception {
 
         Date date = new Date();
 
@@ -82,6 +84,7 @@ public class ItemServiceImpl implements ItemService{
 
         tbItemMapper.insert(tbItem);
 
+
         TbItemDesc tbItemDesc = new TbItemDesc();
 
         tbItemDesc.setItemId(id);
@@ -91,6 +94,38 @@ public class ItemServiceImpl implements ItemService{
 
         tbItemDescMapper.insert(tbItemDesc);
 
+        TbItemParamItem tbipi = new TbItemParamItem();
+
+        tbipi.setItemId(id);
+        tbipi.setCreated(date);
+        tbipi.setUpdated(date);
+        tbipi.setParamData(paramsData);
+
+        itemParamItemMapper.insert(tbipi);
+
         return TaotaoResult.ok();
     }
+
+    @Override
+    public void deleteItem(Long id) throws Exception {
+
+
+        TbItemExample tbie = new TbItemExample();
+        TbItemExample.Criteria criteria = tbie.createCriteria();
+        criteria.andIdEqualTo(id);
+        int k =tbItemMapper.deleteByExample(tbie);
+        System.out.println(k);
+    }
+
+    @Override
+    public void updateItemStatus(Long id,byte status) throws Exception {
+
+        TbItem tb = new TbItem();
+        tb.setId(id);
+        tb.setStatus(status);
+
+        tbItemMapper.updateByPrimaryKeySelective(tb);
+    }
+
+
 }
